@@ -1,24 +1,26 @@
-import React from 'react';
-import logo from './logo.svg';
+import React from 'react'
+import { useRecoilValue } from 'recoil';
 import './App.css';
+import TodoItemCreator from './components/TodoItemCreator'
+import TodoItem from './components/TodoItem'
+import TodoListFilters from './components/TodoListFilter'
+import TodoListStats from './components/TodoListStats'
+import { filteredTodoListState } from './store'
 
 function App() {
+  const todoList = useRecoilValue(filteredTodoListState)
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <TodoListStats />
+      <TodoListFilters />
+      <TodoItemCreator />
+      <div>
+        {
+          todoList.map((item) => 
+            <TodoItem key={item.key} item={item} />
+          )
+        }
+      </div>
     </div>
   );
 }
